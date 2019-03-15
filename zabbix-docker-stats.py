@@ -10,7 +10,7 @@
 # Version: 1.0
 #
 # Author: Richard Sedlak
-#
+# For docker version 18
 #################################################################
 
 import sys
