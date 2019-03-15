@@ -70,13 +70,13 @@ def lmem(data):
      return recalc(data[3])
 
 def pmem(data):
-     return recalc(data[4])
-
-def inet(data):
      return recalc(data[5])
 
-def onet(data):
+def inet(data):
      return recalc(data[6])
+
+def onet(data):
+     return recalc(data[8])
 
 options = {
     'pcpu':pcpu,
