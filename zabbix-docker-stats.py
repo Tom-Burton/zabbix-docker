@@ -67,7 +67,7 @@ def umem(data):
      return recalc(data[2])
 
 def lmem(data):
-     return recalc(data[3])
+     return recalc(data[4])
 
 def pmem(data):
      return recalc(data[5])
