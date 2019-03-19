@@ -89,22 +89,14 @@ options = {
 }
 
 def local_run_command(cmd,file):
-    cmd = cmd + " | tee > " + file
-    if os.path.isfile(file) == False:
-        a = subprocess.Popen(cmd, shell=True)
-        time.sleep(4)
-        subprocess.Popen.kill(a)
-    else:
-        (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(file)
-        ticks=int(time.time())
-        delta=ticks-mtime
-        if (delta > 60):
-            a = subprocess.Popen(cmd, shell=True)
-            time.sleep(4)
-            subprocess.Popen.kill(a)
-
-    strings = open(file,"r").readlines()
-    return strings[1].split()
+    cmd = cmd + " > " + file
+    a = subprocess.Popen(cmd, shell=True)
+    time.sleep(2)
+    subprocess.Popen.kill(a)
+    with open(file, 'r') as f:
+            lines = f.read().splitlines()
+            strings = lines[-1]
+    return strings.split()
 
 container=sys.argv[1]
 key=sys.argv[2]
@@ -113,3 +105,4 @@ cmd="docker stats " + container
 strings = local_run_command(cmd,"/tmp/zabbix-docker-stats-"+container+".out")
 
 print options[key](strings)
+os.system('pkill -f \"docker stats\"')
