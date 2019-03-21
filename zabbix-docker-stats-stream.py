@@ -88,21 +88,38 @@ options = {
     'onet':onet
 }
 
-def local_run_command(cmd,file):
-    cmd = cmd + " > " + file
+def local_run_command(cmd,fname):
+    cmd = cmd + " > " + fname
     a = subprocess.Popen(cmd, shell=True)
-    time.sleep(2)
-    subprocess.Popen.kill(a)
-    with open(file, 'r') as f:
+    time.sleep(1.5)
+    with open(fname, 'r') as f:
             lines = f.read().splitlines()
             strings = lines[-1]
+            filelength = 0
+    while filelength <= 1:
+            filelength = get_length(fname)
+            continue
+    subprocess.Popen.kill(a)
     return strings.split()
+
+
+def get_length(fname):
+    with open(fname) as f:
+        i = 0    
+        for i, l in enumerate(f):
+            pass
+    return i + 1
+
+def kill_procs(container):
+    killcmd = "pkill -f \"docker stats " +container+"\""
+    os.system(killcmd)
 
 container=sys.argv[1]
 key=sys.argv[2]
 
-cmd="docker stats " + container
-strings = local_run_command(cmd,"/tmp/zabbix-docker-stats-"+container+".out")
-
+cmd ="docker stats " + container
+fname = "/tmp/zabbix-docker-stats-"+container+".out" 
+strings = local_run_command(cmd,fname)
 print options[key](strings)
-os.system('pkill -f \"docker stats\"')
+os.system("rm " + fname)
+kill_procs(container)
