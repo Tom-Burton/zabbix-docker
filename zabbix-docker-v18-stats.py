@@ -11,7 +11,7 @@
 #
 # Author: Richard Sedlak
 #
-##################################################################
+#################################################################
 
 import sys
 import os
@@ -61,22 +61,22 @@ def recalc(data):
      return value
 
 def pcpu(data):
-     return recalc(data[1])
-
-def umem(data):
      return recalc(data[2])
 
-def lmem(data):
+def umem(data):
      return recalc(data[3])
 
-def pmem(data):
-     return recalc(data[4])
-
-def inet(data):
+def lmem(data):
      return recalc(data[5])
 
-def onet(data):
+def pmem(data):
      return recalc(data[6])
+
+def inet(data):
+     return recalc(data[7])
+
+def onet(data):
+     return recalc(data[9])
 
 options = {
     'pcpu':pcpu,
