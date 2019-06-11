@@ -17,6 +17,7 @@ import sys
 import os
 import time
 import re
+import subprocess
 
 def B(b):
     return int(float(b))
@@ -89,15 +90,7 @@ options = {
 
 def local_run_command(cmd,file):
     cmd = cmd + " | tee > " + file
-    if os.path.isfile(file) == False:
-        os.system(cmd)
-    else:
-        (mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(file)
-        ticks=int(time.time())
-        delta=ticks-mtime
-        if (delta > 60):
-            os.system(cmd)
-
+    subprocess.check_output(cmd, shell=True)
     strings = open(file,"r").readlines()
     return strings[1].split()
 
